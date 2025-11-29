@@ -1,0 +1,174 @@
+/* ================================================
+   GLOBAL RESET + BASE
+================================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  overscroll-behavior: none;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
+    "San Francisco", Helvetica, Arial, sans-serif;
+  background: var(--chat-bg);
+  color: var(--text-main);
+}
+
+/* ================================================
+   iMESSAGE BACKGROUND (LIGHT MODE)
+================================================ */
+:root {
+  --chat-bg: #f5f5f7;
+  --text-main: #000;
+  --bubble-blue: #007aff;
+  --bubble-gray: #e5e5ea;
+  --bubble-blue-text: #fff;
+  --bubble-gray-text: #000;
+
+  /* light wallpaper texture */
+  --chat-bg: radial-gradient(
+      circle at center,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(245, 245, 247, 1) 70%,
+      rgba(240, 240, 245, 1) 100%
+    );
+}
+
+/* ================================================
+   DARK MODE COLORS (iOS STYLE)
+================================================ */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --chat-bg: #000;
+    --text-main: #fff;
+
+    --bubble-blue: #0A84FF;
+    --bubble-gray: #3A3A3C;
+
+    --bubble-blue-text: #fff;
+    --bubble-gray-text: #fff;
+  }
+}
+
+/* ================================================
+   iMESSAGE BUBBLES
+================================================ */
+.imessage-bubble {
+  max-width: 72%;
+  padding: 10px 14px;
+  font-size: 16px;
+  line-height: 1.35;
+  position: relative;
+  white-space: pre-wrap;
+  word-break: break-word;
+  animation: bubblePop 0.32s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+.imessage-left {
+  background: var(--bubble-gray);
+  color: var(--bubble-gray-text);
+}
+
+.imessage-right {
+  background: var(--bubble-blue);
+  color: var(--bubble-blue-text);
+}
+
+/* ================================================
+   TYPING DOTS (iMessage)
+================================================ */
+.typing-bubble {
+  display: inline-flex;
+  gap: 5px;
+  background: var(--bubble-gray);
+  padding: 8px 12px;
+  border-radius: 16px;
+}
+
+.typing-bubble span {
+  width: 6px;
+  height: 6px;
+  background: #8e8e93;
+  border-radius: 50%;
+  animation: typingBlink 1.4s infinite both;
+}
+
+.typing-bubble span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing-bubble span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes typingBlink {
+  0% { opacity: 0.3; transform: translateY(0); }
+  20% { opacity: 1; transform: translateY(-3px); }
+  100% { opacity: 0.3; transform: translateY(0); }
+}
+
+/* ================================================
+   iOS INPUT BAR (iMessage style)
+================================================ */
+.ios-input-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-top: 1px solid rgba(0,0,0,0.1);
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(20px);
+}
+
+@media (prefers-color-scheme: dark) {
+  .ios-input-bar {
+    background: rgba(30,30,30,0.6);
+  }
+}
+
+.ios-input-box {
+  flex: 1;
+  border: none;
+  background: #fff;
+  padding: 10px 14px;
+  border-radius: 18px;
+  font-size: 16px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .ios-input-box {
+    background: #2c2c2e;
+    color: #fff;
+  }
+}
+
+.ios-send-btn {
+  background: #007aff;
+  padding: 8px 14px;
+  color: #fff;
+  border-radius: 18px;
+  font-size: 15px;
+}
+
+/* ================================================
+   BUBBLE + REACTION ANIMATIONS
+================================================ */
+@keyframes bubblePop {
+  0% { transform: scale(0.65); opacity: 0.2; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes reactionPop {
+  0% { transform: scale(0.5); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ================================================
+   SCROLLBAR HIDE (iOS STYLE)
+================================================ */
+::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}

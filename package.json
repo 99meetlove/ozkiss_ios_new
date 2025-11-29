@@ -1,0 +1,28 @@
+{
+  "name": "ozkiss_ios_new",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.86.0",
+    "chart.js": "^4.5.1",
+    "framer-motion": "^12.23.24",
+    "next": "16.0.5",
+    "react": "19.2.0",
+    "react-chartjs-2": "^5.3.1",
+    "react-dom": "19.2.0",
+    "recharts": "^3.5.1",
+    "sharp": "^0.34.5"
+  },
+  "devDependencies": {
+    "babel-plugin-react-compiler": "1.0.0",
+    "baseline-browser-mapping": "^2.8.32",
+    "eslint": "^9",
+    "eslint-config-next": "16.0.5"
+  }
+}
