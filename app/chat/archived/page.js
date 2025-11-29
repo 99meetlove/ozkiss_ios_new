@@ -2,61 +2,42 @@
 
 import { useEffect, useState } from "react";
 import { supabase } from "@/utils/supabaseClient";
-import ChatListItem from "@/components/Chat/ChatListItem.js";
+import ChatListItem from "@/components/Chat/ChatListItem";
 import "@/components/Chat/ChatList.css";
 
 export default function ArchivedChatsPage() {
-  const [chats, setChats] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const userId =
+    typeof window !== "undefined"
+      ? localStorage.getItem("user_id")
+      : null;
 
-  // Load archived chats
+  const [archivedRooms, setArchivedRooms] = useState([]);
+
   useEffect(() => {
-    const loadChats = async () => {
-      setLoading(true);
+    if (!userId) return;
 
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-
-      if (!session) {
-        setChats([]);
-        setLoading(false);
-        return;
-      }
-
-      const userId = session.user.id;
-
+    const loadArchived = async () => {
       const { data, error } = await supabase
-        .from("chats")
+        .from("chat_rooms")
         .select("*")
-        .eq("user_id", userId)
-        .eq("archived", true)
-        .order("updated_at", { ascending: false });
+        .eq("is_archived", true)
+        .contains("participants", [userId]);
 
-      if (!error && data) {
-        setChats(data);
-      }
-
-      setLoading(false);
+      if (!error) setArchivedRooms(data || []);
     };
 
-    loadChats();
-  }, []);
+    loadArchived();
+  }, [userId]);
 
   return (
-    <div className="p-4">
-      <h1 className="text-xl font-semibold mb-4">Archived Chats</h1>
-
-      {loading ? (
-        <p className="text-gray-400">Loading…</p>
-      ) : chats.length === 0 ? (
-        <p className="text-gray-500">No archived chats</p>
+    <div className="chat-list">
+      <h2 className="chat-section-title">Archived Chats</h2>
+      {archivedRooms.length === 0 ? (
+        <p className="chat-empty">No archived chats</p>
       ) : (
-        <div className="chat-list">
-          {chats.map((chat) => (
-            <ChatListItem key={chat.id} chat={chat} />
-          ))}
-        </div>
+        archivedRooms.map((room) => (
+          <ChatListItem key={room.id} room={room} />
+        ))
       )}
     </div>
   );
