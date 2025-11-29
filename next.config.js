@@ -1,18 +1,12 @@
 /** @type {import('next').NextConfig} */
-
 const nextConfig = {
-  reactStrictMode: true,
   experimental: {
-    optimizePackageImports: true,
+    optimizePackageImports: [], // ← 必须是 array，不能是 true/false
   },
-  webpack: (config) => {
-    // Required for some client components
-    config.resolve.extensionAlias = {
-      '.js': ['.tsx', '.ts', '.jsx', '.js'],
-    };
-    return config;
+  images: {
+    domains: ["lh3.googleusercontent.com", "res.cloudinary.com"],
   },
+  reactStrictMode: false,
 };
 
-// Export ESM instead of CommonJS (Fix Vercel warning)
 export default nextConfig;
