@@ -1,15 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { supabase } from "@/utils/supabaseClient";
-import ChatListItem from "@/components/Chat/ChatListItem";
-import "@/components/Chat/ChatList.css";
+import { supabase } from "../../../utils/supabaseClient";
+import ChatListItem from "../../../components/Chat/ChatListItem";
+import "../../../components/Chat/ChatList.css";
 
 export default function ArchivedChatsPage() {
   const userId =
-    typeof window !== "undefined"
-      ? localStorage.getItem("user_id")
-      : null;
+    typeof window !== "undefined" ? localStorage.getItem("user_id") : null;
 
   const [archivedRooms, setArchivedRooms] = useState([]);
 
@@ -23,7 +21,9 @@ export default function ArchivedChatsPage() {
         .eq("is_archived", true)
         .contains("participants", [userId]);
 
-      if (!error) setArchivedRooms(data || []);
+      if (!error) {
+        setArchivedRooms(data || []);
+      }
     };
 
     loadArchived();
@@ -32,6 +32,7 @@ export default function ArchivedChatsPage() {
   return (
     <div className="chat-list">
       <h2 className="chat-section-title">Archived Chats</h2>
+
       {archivedRooms.length === 0 ? (
         <p className="chat-empty">No archived chats</p>
       ) : (
